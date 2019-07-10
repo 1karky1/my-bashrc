@@ -55,7 +55,7 @@ fi
 
 # sudo completion
 if type sudo >/dev/null 2>/dev/null; then
-    if [ "$PS1" ]; then
+    if [[ "$PS1" ]]; then
         complete -cf sudo
     fi
 else
