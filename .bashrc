@@ -79,20 +79,20 @@ BLGREY="1;37m"
 #PS1 functions
 start_color() {
     color=$1
-    echo "${START_NON_PRINTING_SEQUENCE}${START_COLOR_SEQUENCE}${color}${END_NON_PRINTING_SEQUENCE}"
+    echo -e "${START_NON_PRINTING_SEQUENCE}${START_COLOR_SEQUENCE}${color}${END_NON_PRINTING_SEQUENCE}"
 }
 end_color() {
-    echo "${START_NON_PRINTING_SEQUENCE}${END_COLOR_SEQUENCE}${END_NON_PRINTING_SEQUENCE}"
+    echo -e "${START_NON_PRINTING_SEQUENCE}${END_COLOR_SEQUENCE}${END_NON_PRINTING_SEQUENCE}"
 }
 git_branch() {
 	if [[ $(git rev-parse --is-inside-work-tree 2> /dev/null) != "true" ]]; then
-		echo "";
+		echo -e "";
 	else
 		branch_name=$(parse_git_branch)
 		if git status 2>/dev/null | grep --quiet "nothing to commit"; then
-			echo  "$(ps1_string ${GREEN} "(✓ ${branch_name})")";
+			echo -e  "$(ps1_string ${GREEN} "(✓ ${branch_name})")";
 		else
-			echo  "$(ps1_string ${RED} "(☢ ${branch_name})")";
+			echo -e  "$(ps1_string ${RED} "(☢ ${branch_name})")";
 		fi;
 	fi;
 }
@@ -102,22 +102,22 @@ parse_git_branch() {
 ps1_string(){
     color="$1"
     content="$2"
-    echo "$(start_color ${color})${content}$(end_color)"
+    echo -e "$(start_color ${color})${content}$(end_color)"
 }
 ps1_git() {
-    echo "$(git_branch)"
+    echo -e "$(git_branch)"
 }
 ps1_username() {
-    echo "$(ps1_string ${GREEN} ${USERNAME})"
+    echo -e "$(ps1_string ${GREEN} ${USERNAME})"
 }
 ps1_working_directory() {
-    echo "$(ps1_string ${BBLUE} ${WORKING_DIRECTORY})"
+    echo -e "$(ps1_string ${BBLUE} ${WORKING_DIRECTORY})"
 }
 ps1_start_sign() {
-    echo "$(ps1_string ${GREEN} "$")"
+    echo -e "$(ps1_string ${GREEN} "$")"
 }
 
-PS1="$(ps1_username) $(ps1_working_directory) $(ps1_git) \n$(ps1_start_sign) $(start_color ${BLGREY})"
+PS1="$(ps1_username) $(ps1_working_directory) \$(ps1_git) \n$(ps1_start_sign) $(start_color ${BLGREY})"
 
 
 
