@@ -41,7 +41,6 @@ else
 fi
 
 # npm completion
-LINK_TO_GIT_COMPLETION_SCRIPT="https://raw.githubusercontent.com/git/git/master/contrib/completion/git-completion.bash"
 NPM_COMPLETION_PATH="$HOME/.npm-completion.bash"
 if type npm >/dev/null 2>/dev/null; then
     if [[ -f ${NPM_COMPLETION_PATH} ]]; then
