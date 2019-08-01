@@ -121,6 +121,9 @@ ps1_start_sign() {
 
 PS1="$(ps1_username) $(ps1_working_directory) \$(ps1_git) \n$(ps1_start_sign) $(start_color ${BLGREY})"
 
+# command Aliases
+COMMANDS_PATH="$HOME/.bash_commands"
+export PATH=$COMMANDS_PATH:$PATH
 
 
 
