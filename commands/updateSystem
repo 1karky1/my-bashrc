@@ -11,4 +11,5 @@ echo "Running the aur update yay -Syu --aur"
 yay -Syu --aur
 echo "Computer reboot"
 shouldReboot=$(yes_no_prompt "$PROMPT_QUESTION")
+echo ""
 [ "$shouldReboot" == "$PROMPT_YES" ] && sudo reboot
