@@ -1,7 +1,14 @@
 #!/bin/bash
+SCRIPT_DIR="$(dirname "$0")"
+PROMPT_QUESTION="Reboot? [Y/n] "
+
+# Import utils
+. "$SCRIPT_DIR/utils.sh"
+
 echo "Running the full system update pacman -Syu"
 sudo pacman -Syu
 echo "Running the aur update yay -Syu --aur"
 yay -Syu --aur
 echo "Computer reboot"
-sudo reboot
+shouldReboot=$(yes_no_prompt "$PROMPT_QUESTION")
+[ "$shouldReboot" == "$PROMPT_YES" ] && sudo reboot
