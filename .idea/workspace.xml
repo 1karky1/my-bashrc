@@ -2,8 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="319d43fb-2243-4830-88dc-a604f7cd018f" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/commands/updateSystem.sh" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.bashrc" beforeDir="false" afterPath="$PROJECT_DIR$/.bashrc" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/insatll_bashrc.sh" beforeDir="false" afterPath="$PROJECT_DIR$/insatll_bashrc.sh" afterDir="false" />
     </list>
@@ -52,7 +50,7 @@
       <option name="presentableId" value="Default" />
       <updated>1562778941810</updated>
       <workItem from="1562778943198" duration="750000" />
-      <workItem from="1564661015664" duration="7164000" />
+      <workItem from="1564661015664" duration="8762000" />
     </task>
     <servers />
   </component>

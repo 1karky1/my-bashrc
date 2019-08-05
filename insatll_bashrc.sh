@@ -4,7 +4,7 @@ BASHRC_PATH="$HOME/.bashrc"
 MY_BASHRC_PATH="$HOME/.mybashrc"
 REPO_BASHRC_PATH=".bashrc"
 COMPUTER_COMMANDS_PATH="$HOME/.bash_commands"
-REPO_COMMANDS_PATH="commands"
+REPO_COMMANDS_PATH="./commands"
 PROMPT_QUESTION="Are You Sure to replace old bash_commands with new? [Y/n] "
 YES="Y"
 NO="N"
@@ -33,8 +33,10 @@ echo ""
 if [ "$should_remove" == "$YES" ]; then
   # remove home .bash_commands folder
   rm -r "$COMPUTER_COMMANDS_PATH" 2>/dev/null
+  # create commands dir
+  mkdir -p "$COMPUTER_COMMANDS_PATH"
   # cp repo commands folder into computer commands folder
-  cp "$REPO_COMMANDS_PATH/*" "$COMPUTER_COMMANDS_PATH"
+  cp "$REPO_COMMANDS_PATH"/* "$COMPUTER_COMMANDS_PATH"
 fi
 
 # restart bash to apply changes
