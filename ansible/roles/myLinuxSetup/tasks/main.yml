@@ -1,0 +1,23 @@
+- name: Install useful apps
+  become: true
+  community.general.pacman:
+    name:
+      - neovim
+      - neofetch
+      - bash-completion
+      - bat
+      - ncdu
+      - btop
+    state: present
+- name: Copy my bashrc
+  copy:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    mode: "{{item.mode}}"
+  with_items:
+    - { src: '.mybashrc',dest: '~/.mybashrc', mode: '0777' }
+- name: Make usre that .mybashrc is applied
+  ansible.builtin.lineinfile:
+    path: ~/.bashrc
+    line: '[[ -f ~/.mybashrc ]] && . ~/.mybashrc'
+    state: present

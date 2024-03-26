@@ -1,0 +1,121 @@
+# coloured ls command
+alias ls='ls --color=auto'
+
+# coloured grep command
+alias grep='grep --color=auto'
+
+alias fgrep='fgrep --color=auto'
+alias egrep='egrep --color=auto'
+alias diff='diff --color=auto'
+alias ip='ip --color=auto'
+
+# colorful cat
+alias cat='bat -P -p'
+
+# better top command
+alias top='btop'
+
+# better du command
+alias du='ncdu'
+
+# better du command
+alias vim='nvim'
+
+# Make neovim default editor if installed
+export EDITOR=nvim
+
+# PS1
+#START_NON_PRINTING_SEQUENCE="\["
+START_NON_PRINTING_SEQUENCE="\001"
+#END_NON_PRINTING_SEQUENCE="\]"
+END_NON_PRINTING_SEQUENCE="\002"
+START_COLOR_SEQUENCE="\e["
+END_COLOR_SEQUENCE="\e[m"
+USERNAME="\u"
+HOST_PROMPT="\h"
+WORKING_DIRECTORY="\w"
+
+# PS1 colors
+GREEN="0;32m"
+LGREEN="1;32m"
+CYAN="0;36m"
+LCYAN="1;36m"
+RED="0;31m"
+LRED="1;31m"
+BLUE="0;34m"
+LBLUE="1;34m"
+LGREY="1;37m"
+GREY="0;37m"
+
+#PS1 functions
+start_color() {
+    color=$1
+    echo -e "${START_NON_PRINTING_SEQUENCE}${START_COLOR_SEQUENCE}${color}${END_NON_PRINTING_SEQUENCE}"
+}
+end_color() {
+    echo -e "${START_NON_PRINTING_SEQUENCE}${END_COLOR_SEQUENCE}${END_NON_PRINTING_SEQUENCE}"
+}
+git_branch() {
+        if [[ $(git rev-parse --is-inside-work-tree 2> /dev/null) != "true" ]]; then
+                echo -e "";
+        else
+                branch_name=$(parse_git_branch)
+                if git status 2>/dev/null | grep --quiet "nothing to commit"; then
+                        echo -e  "$(ps1_open_block "(")$(ps1_string ${GREEN} "✅  ${branch_name}")$(ps1_close_block ")")";
+                else
+                        echo -e  "$(ps1_open_block "(")$(ps1_string ${RED} "⛔  ${branch_name}")$(ps1_close_block ")")";
+                fi;
+        fi;
+}
+parse_git_branch() {
+        git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/\1/'
+}
+ps1_string(){
+    color="$1"
+    content="$2"
+    echo -e "$(start_color ${color})${content}$(end_color)"
+}
+ps1_open_block() {
+    echo -e "$(ps1_string $LBLUE "─$1")"
+}
+ps1_close_block() {
+    echo -e "$(ps1_string $LBLUE "$1")"
+}
+ps1_git() {
+    echo -e "$(git_branch)"
+}
+ps1_username() {
+    echo -e "$(ps1_string ${GREEN} ${USERNAME})$(ps1_close_block ")")"
+}
+ps1_host() {
+    echo -e "$(ps1_open_block "(")$(ps1_string ${GREEN} ${HOST_PROMPT})"
+}
+ps1_working_directory() {
+    echo -e "$(ps1_open_block "[")$(ps1_string ${CYAN} ${WORKING_DIRECTORY})$(ps1_close_block "]")"
+}
+ps1_start_sign() {
+    echo -e "$(ps1_string ${GREEN} "\$ ")"
+}
+ps1_start_first_line() {
+    echo -e "$(ps1_string ${LBLUE} "┌─")"
+}
+ps1_start_second_line() {
+    echo -e "$(ps1_string ${LBLUE} "└─")"
+}
+ps1_virtualenv() {
+  [[ -n "$VIRTUAL_ENV" ]] && echo -e "$(ps1_open_block "")🐍$(basename "$VIRTUAL_ENV")$(ps1_close_block ")")"
+}
+#make sure there is always new line at the end of the command
+ps1_set_prompt() {
+    IFS=';' read -sdR -p $'\E[6n' ROW COL
+    [ $COL -ne 1 ] && echo -e '\0'
+}
+VIRTUAL_ENV_DISABLE_PROMPT=1
+PROMPT_COMMAND='ps1_set_prompt'
+PS1="$(ps1_start_first_line)$(ps1_host)@$(ps1_username)$(ps1_working_directory)\$(ps1_git)\n$(ps1_start_second_line)$(ps1_start_sign)"
+
+# command Aliases
+COMMANDS_PATH="$HOME/.bash_commands"
+export PATH=$COMMANDS_PATH:$PATH
+
+neofetch
